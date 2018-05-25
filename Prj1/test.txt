@@ -1,0 +1,25 @@
+1396/7/16
+4
+94123456
+95123456
+96123456
+97123456
+add plan 96/07/18
+jooje 1500 1396/7/16
+zereshkPolo 1200 1396/7/17
+fesenjoon 1300 1396/7/17
+end
+deposite 94123456 20000
+deposite 95123456 13000
+reserve 94123456 1396/7/18 jooje
+reserve 94123456 1396/7/18 fesenjoon
+get food 94123456 jooje
+add plan 1396/7/19
+koobide 1700 1396/7/18
+end
+reserve 94123456 1396/7/19 koobide
+reserve 95123456 1396/7/19 koobide
+get forget code 94123456 koobide
+get food 94123456;1396/7/19;koobide
+get food 95123456 koobide
+closed

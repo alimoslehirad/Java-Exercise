@@ -1,7 +1,8 @@
 package com.company.objects;
 import com.company.Cmds.*;
 import java.util.*;
-
+import com.company.process.*;
+import java.io.*;
 
 public class ObjectPool {
     public ArrayList<Student>  studentAlist;
@@ -21,15 +22,21 @@ public class ObjectPool {
     public int indexOfStudent;
     public int indexOfReserveHis;
     public int indexOfSell;
+    public int intTeamp;
     public Food foods;
     public FoodPlan_c foodPlans ;
     public String[] strArray;
     public String[] strArray2;
     public Student students;
     public int[] reserveDate;
-
-
+    public TextIO textIO;
+    public boolean ifTerminalInput;
     public ReserveSysCmds[] reserveSys;
+    public  String fileName;
+    // FileReader reads text files in the default encoding.
+    public FileReader fileReader;
+    // Always wrap FileReader in BufferedReader.
+    public BufferedReader bufferedReader;
     public void objectInit(){
         reserveSys= new ReserveSysCmds[9];
         reserveSys[0]= new GetFood_c();
@@ -41,7 +48,6 @@ public class ObjectPool {
         reserveSys[6]= new Sell_c();
         reserveSys[7]= new Buy_c();
         reserveSys[8]= new GetCode_c();
-
         students= new Student();
         foodPlans=new FoodPlan_c();
         foods=new Food();
@@ -53,5 +59,23 @@ public class ObjectPool {
         buyAlist= new ArrayList<Buy_c>();
         foodPlan = new FoodPlan_c();
         command="Init Val";
+        textIO=new TextIO();
+
+        try {
+            fileName = "test.txt";
+            fileReader = new FileReader(fileName);
+            bufferedReader = new BufferedReader(fileReader);
+
+        } catch (FileNotFoundException ex) {
+            System.out.println(
+                    "Unable to open file '" +
+                            fileName + "'");
+        } catch (IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                            + fileName + "'");
+            // Or we could just do this:
+            // ex.printStackTrace();
+        }
     }
 }

@@ -2,7 +2,7 @@
 package com.company.Cmds;
 import  com.company.objects.*;
 public class Reserve_c extends ReserveSysCmds {
-    int[] reserveDate;
+    int[] reserveDate=new int[3];
     String foodName;
     String studentNum;
 
@@ -37,6 +37,7 @@ public class Reserve_c extends ReserveSysCmds {
         studentNum = v.strArray[1];
         foodName = v.strArray[3];
         v.date = v.strArray[2];
+        System.out.println("date(reserveCmd) is : " + v.date);
         dateSplit(v.strArray[2], intDate);
 
     }

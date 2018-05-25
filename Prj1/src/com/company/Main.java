@@ -10,8 +10,9 @@ public class Main {
         ObjectPool v = new ObjectPool();
         ProcessControl p =new ProcessControl();
         v.objectInit();
-        p.getInitInf(v);System.out.print("main loop");
-        p.mainLoop(v);
+        p.getInitInf(v);
+        System.out.println("main loop");
+        p.commandProcess(v,v.ifTerminalInput);
         p.endProcess(v);
 
 

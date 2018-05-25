@@ -52,6 +52,7 @@ public class ReserveSysCmds {
     public void dateSplit(String date , int[] intDate){
         String[] strArray;
         strArray=date.split("/");
+        System.out.println("date is ---------: " + strArray[0]);
         intDate[0]=Integer.parseInt(strArray[0]);
         intDate[1]=Integer.parseInt(strArray[1]);
         intDate[2]=Integer.parseInt(strArray[2]);
