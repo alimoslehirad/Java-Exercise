@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 //import java.util.Timer;
 import java.awt.event.KeyEvent;
@@ -22,6 +26,8 @@ public class PlayGround extends JFrame implements KeyListener{
     private static final int LeftKey=37;
     private static final int DownKey=40;
     private static final int UpKey=38;
+    public BufferedReader bufferedReader;
+    public String fileName;
     public void playGroung_make(){
 
         JPanel panel =new JPanel();
@@ -136,6 +142,24 @@ public class PlayGround extends JFrame implements KeyListener{
 
     }
     public void playGroundMask_init(int[][] mask){
+        try {
+             fileName = "PlayGroundMap.txt";
+            FileReader fileReader = new FileReader(fileName);
+            bufferedReader = new BufferedReader(fileReader);
+
+        } catch (FileNotFoundException ex) {
+            System.out.println(
+                    "Unable to open file '" +
+                            fileName + "'");
+        } catch (IOException ex) {
+            System.out.println(
+                    "Error reading file '"
+                            + fileName + "'");
+            // Or we could just do this:
+            // ex.printStackTrace();
+        }
+
+
         int BocCnt=0;
         for(int i=2;i<15;i=i+2){
             for(int j=2;j<15;j=j+2){
@@ -145,23 +169,27 @@ public class PlayGround extends JFrame implements KeyListener{
 
         }
 
-        BocCnt=0; boolean boxNum_flag=false;
+        BocCnt=0; boolean boxNum_flag=false; String[] strArray;
         for(int i=1;i<15;i++) {
-            for (int j = 1; j < 15; j++) {
-                if( mask[i][j]!=wallID){
-                    if(Math.random()>.6 && !boxNum_flag  ) {
-                        BocCnt++;
-                        mask[i][j] = BoxID;
-                        if (BocCnt > 30) {
-                            boxNum_flag = true;
-                            BocCnt = 0;
-                        }
-                    }
-                    else{
-                        mask[i][j]=Blank;
-                    }
+            try {
+              String  line = bufferedReader.readLine();
+
+                if (line == null) bufferedReader.close();
+                strArray=line.split(" ");
+                for(int j=0;j<14;j++){
+                    mask[i][j+1]=Integer.parseInt(strArray[j]);
                 }
 
+            } catch (FileNotFoundException ex) {
+                System.out.println(
+                        "Unable to open file '" +
+                                fileName + "'");
+            } catch (IOException ex) {
+                System.out.println(
+                        "Error reading file '"
+                                + fileName + "'");
+                // Or we could just do this:
+                // ex.printStackTrace();
             }
 
         }
