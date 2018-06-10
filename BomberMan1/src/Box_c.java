@@ -9,14 +9,18 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JTextField;
 public class Box_c extends Obstacle {
-    public Integer xPos;
-    public Integer yPos = -20;
+    public byte content;
+    private int ID=2;
+    public  int getID(){
+        return this.ID;
+    }
+
     private Integer lato = 20;
-    Image woodenBox_img = Toolkit.getDefaultToolkit().getImage("WoodenBox.png");
+    public Image img = Toolkit.getDefaultToolkit().getImage("WoodenBox.png");
 
 
 public void draw(PlayGround P , Graphics2D g){
-    g.drawImage(this.woodenBox_img, yPos, xPos, P);
+    g.drawImage(this.img, yPos, xPos, P);
 
 }
 

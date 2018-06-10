@@ -9,37 +9,58 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JTextField;
 
-public class MovingObject {
-    private Integer xPos = 225;
-    private Integer yPos = 220;
-    private Integer width = 20;
-    private Integer height = 40;
+public abstract class MovingObject extends JFrame {
+    public Integer xPos;
+    public Integer yPos ;
+    public int width = 50;
+    public int height = 50;
+    public int speed=1;
+
 
     public Integer getxPos() {
         return xPos;
     }
-
-    public void setxPos(Integer xPos) {
-        this.xPos = xPos;
+    public int getxTopLeft(){
+        return this.xPos;
     }
+    public int getxTopRight(){
+        return this.xPos+this.width;
+    }
+    public int getxDownLeft(){
+        return this.xPos;
+    }
+    public int getxDownRight(){
+        return this.xPos+this.width;
+    }
+    public int getyDownRight(){return this.yPos+this.height;}
+    public int getyTopRight(){return this.yPos;}
+
+    public  boolean colisioncheck(int x , int y ){
+        return true;
+    }
+
 
     public Integer getyPos() {
         return yPos;
     }
 
-    public void setyPos(Integer yPos) {
-        this.yPos = yPos;
+    public void setPos(int x, int y){
+        this.yPos=y;
+        this.xPos=x;
     }
 
-    public Integer getWidth() {
+    public int getWidth() {
         return width;
+    }
+    public int getStep(){
+        return this.speed*this.width/2;
     }
 
     public void setWidth(Integer width) {
         this.width = width;
     }
 
-    public Integer getHeight() {
+    public int getHeight() {
         return height;
     }
 
@@ -48,34 +69,29 @@ public class MovingObject {
     }
 
     public void move_right() {
-        if (xPos < 420)
-            xPos = xPos + width;
+
+        xPos = xPos + getStep();
     }
 
     public void move_left() {
-        xPos = xPos - width;
+        xPos = xPos - getStep();
         if (xPos < 0) {
             xPos = 0;
         }
     }
 
     public void move_up() {
-        xPos = xPos - width;
-        if (xPos < 0) {
-            xPos = 0;
+        yPos = yPos - getStep();
+        if (yPos < 0) {
+            yPos = 0;
         }
     }
 
     public void move_down() {
-        xPos = xPos - width;
-        if (xPos < 0) {
-            xPos = 0;
-        }
+        yPos = yPos + getStep();
+
     }
 
-    public void draw_movingObj(Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect(xPos, yPos, width, height);
-    }
+    abstract void   draw(PlayGround P , Graphics2D g);
 
 }

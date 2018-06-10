@@ -8,19 +8,21 @@ import java.awt.event.*;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JTextField;
-public class Wall_c extends Obstacle {
-
-    private Integer lato = 20;
-    private int ID=3;
+public class Blank_c extends Obstacle {
+    public byte content;
+    private int ID=0;
     public  int getID(){
         return this.ID;
     }
 
-    public Image img = Toolkit.getDefaultToolkit().getImage("wall.png");
+    private Integer lato = 20;
+    Image woodenBox_img = Toolkit.getDefaultToolkit().getImage("WoodenBox.png");
 
 
-    public void draw(PlayGround P, Graphics2D g) {
-        g.drawImage(this.img, yPos, xPos, P);
+    public void draw(PlayGround P , Graphics2D g){
+        g.setColor(Color.WHITE);
+        g.fillRect(yPos, xPos,50,50);
 
     }
+
 }

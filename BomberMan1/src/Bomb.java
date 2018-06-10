@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 public class Bomb {
     public int xPos;
     public int yPos;
-
+    byte state;
     public Image Bomb_img = Toolkit.getDefaultToolkit().getImage("Bomb.jpg");
 
 }
