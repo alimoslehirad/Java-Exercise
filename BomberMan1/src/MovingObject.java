@@ -10,12 +10,14 @@ import javax.swing.Timer;
 import javax.swing.JTextField;
 
 public abstract class MovingObject extends JFrame {
-    public Integer xPos;
-    public Integer yPos ;
+
     public int width = 50;
     public int height = 50;
     public int speed=1;
-
+    public int indexi;
+    public int indexj;
+    public Integer xPos=indexi*50;
+    public Integer yPos =indexj*50+30;
 
     public Integer getxPos() {
         return xPos;
@@ -70,25 +72,23 @@ public abstract class MovingObject extends JFrame {
 
     public void move_right() {
 
-        xPos = xPos + getStep();
+        indexj++; xPos=indexj*50;
+        yPos=indexi*50+30;
     }
 
     public void move_left() {
-        xPos = xPos - getStep();
-        if (xPos < 0) {
-            xPos = 0;
-        }
+        indexj--; xPos=indexj*50;
+        yPos=indexi*50+30;
     }
 
     public void move_up() {
-        yPos = yPos - getStep();
-        if (yPos < 0) {
-            yPos = 0;
-        }
+        indexi--; xPos=indexj*50;
+        yPos=indexi*50+30;
     }
 
     public void move_down() {
-        yPos = yPos + getStep();
+        indexi++; xPos=indexj*50;
+        yPos=indexi*50+30;
 
     }
 

@@ -12,15 +12,19 @@ public class Wall_c extends Obstacle {
 
     private Integer lato = 20;
     private int ID=3;
+    @Override
     public  int getID(){
         return this.ID;
     }
-
+    @Override
+    public boolean getToFireAction() {
+        return false;
+    }
     public Image img = Toolkit.getDefaultToolkit().getImage("wall.png");
 
-
+    @Override
     public void draw(PlayGround P, Graphics2D g) {
-        g.drawImage(this.img, yPos, xPos, P);
+        g.drawImage(this.img, xPos, yPos, P);
 
     }
 }

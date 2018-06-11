@@ -14,14 +14,23 @@ public class Blank_c extends Obstacle {
     public  int getID(){
         return this.ID;
     }
+    public Blank_c(int x, int y){
+        this.xPos=x;
+        this.yPos=y;
+
+    }
 
     private Integer lato = 20;
     Image woodenBox_img = Toolkit.getDefaultToolkit().getImage("WoodenBox.png");
+    @Override
+    public boolean getToFireAction() {
+        return false;
+    }
 
 
     public void draw(PlayGround P , Graphics2D g){
         g.setColor(Color.WHITE);
-        g.fillRect(yPos, xPos,50,50);
+        g.fillRect(xPos, yPos,50,50);
 
     }
 

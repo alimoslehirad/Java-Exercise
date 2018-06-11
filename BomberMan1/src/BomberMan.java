@@ -10,8 +10,8 @@ import javax.swing.Timer;
 import javax.swing.JTextField;
 public class BomberMan extends MovingObject {
 
-    private Integer width = 20;
-    private Integer height = 40;
+    private Integer width = 50;
+    private Integer height = 50;
     Image bombermanCircle =Toolkit.getDefaultToolkit().getImage("circle.png");
 
 

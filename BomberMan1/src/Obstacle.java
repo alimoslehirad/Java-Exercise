@@ -17,6 +17,7 @@ public abstract class Obstacle extends JFrame{
     public int height=50;
 
     public abstract int getID();
+    public abstract boolean getToFireAction();
     public Integer getxPos() {
         return xPos;
     }

@@ -67,35 +67,46 @@ public class PlayGround extends JFrame implements KeyListener{
                 repaint();
             }
         }
-        else if (e.getKeyCode()==66 && v.bombNum==9){    // b
-            System.out.println("Bomb");
+        else if (e.getKeyCode()==66 && v.bombNum!=9){    // b
 
-            v.frameMask[v.p1.xPos][v.p1.yPos] = v.BombID;
 
             v.b1[v.bombNum].xPos=v.p1.xPos;
             v.b1[v.bombNum].yPos=v.p1.yPos;
+            v.b1[v.bombNum].indexi=v.p1.indexi;
+            v.b1[v.bombNum].indexj=v.p1.indexj;
+
             v.b1[v.bombNum].state=v.BreadytToFire;
-            //repaint();
+            v.obs[v.p1.indexi][v.p1.indexj]=v.b1[v.bombNum];
+
         }
         else if(e.getKeyCode()==88)   {       //x
 
 
             if(v.b1[v.bombNum].state==v.BreadytToFire){
-                if(v.frameMask[v.b1[v.bombNum].xPos+1][v.b1[v.bombNum].yPos]!=v.wallID){
-                    v.frameMask[v.b1[v.bombNum].xPos+1][v.b1[v.bombNum].yPos]=v.Blank;
+                int indexi=v.b1[v.bombNum].indexi;
+                int indexj=v.b1[v.bombNum].indexj;
+               if(indexi<13){
+                    if(v.obs[indexi+1][indexj].getToFireAction()) {
+                        v.obs[indexi + 1][indexj] = new Blank_c(v.obs[indexi + 1][indexj].getxPos(), v.obs[indexi + 1][indexj].getyPos());
+                    }
+               }
+                if(indexi>0) {
+                    if (v.obs[indexi - 1][indexj].getToFireAction()) {
+                        v.obs[indexi - 1][indexj] = new Blank_c(v.obs[indexi - 1][indexj].getxPos(), v.obs[indexi - 1][indexj].getyPos());
+                    }
                 }
-                if(v.frameMask[v.b1[v.bombNum].xPos][v.b1[v.bombNum].yPos+1]!=v.wallID){
-                    v.frameMask[v.b1[v.bombNum].xPos][v.b1[v.bombNum].yPos+1]=v.Blank;
+                if(indexj<13) {
+                    if (v.obs[indexi][indexj + 1].getToFireAction()) {
+                        v.obs[indexi][indexj + 1] = new Blank_c(v.obs[indexi][indexj + 1].getxPos(), v.obs[indexi][indexj + 1].getyPos());
+                    }
                 }
-                if(v.frameMask[v.b1[v.bombNum].xPos-1][v.b1[v.bombNum].yPos]!=v.wallID){
-                    v.frameMask[v.b1[v.bombNum].xPos-1][v.b1[v.bombNum].yPos]=v.Blank;
+                if(indexj>0) {
+                    if (v.obs[indexi][indexj - 1].getToFireAction()) {
+                        v.obs[indexi][indexj - 1] = new Blank_c(v.obs[indexi][indexj - 1].getxPos(), v.obs[indexi][indexj - 1].getyPos());
+                    }
                 }
-                if(v.frameMask[v.b1[v.bombNum].xPos][v.b1[v.bombNum].yPos-1]!=v.wallID){
-                    v.frameMask[v.b1[v.bombNum].xPos][v.b1[v.bombNum].yPos-1]=v.Blank;
-                }
-                v.frameMask[v.b1[v.bombNum].xPos][v.b1[v.bombNum].yPos]=v.Blank;
-                v.b1[v.bombNum].state=v.BFired;
-                v.bombNum++;
+
+                v.obs[v.b1[v.bombNum].indexi][v.b1[v.bombNum].indexj]  =new Blank_c(v.obs[v.b1[v.bombNum].indexi][v.b1[v.bombNum].indexj].getxPos(), v.obs[v.b1[v.bombNum].indexi][v.b1[v.bombNum].indexj].getyPos());
                 repaint();
 
             }
@@ -136,23 +147,23 @@ public class PlayGround extends JFrame implements KeyListener{
 
                 if (line == null) v.bufferedReader.close();
                 strArray=line.split(" ");
-                System.out.println(i);
+//                System.out.println(i);
                 for(int j=0;j<14;j++){
-                    System.out.println("j= "+j);
+//                    System.out.println("j= "+j);
                     mask[i][j]=Integer.parseInt(strArray[j]);
                     if(mask[i][j]==v.BoxID){
                         v.obs[i][j]=new Box_c();
-                        v.obs[i][j].setPos(i*50+30,j*50);
+                        v.obs[i][j].setPos(j*50,i*50+30);
 
                     }
                      if(mask[i][j]==v.wallID){
                          v.obs[i][j]=new Wall_c();
-                        v.obs[i][j].setPos(i*50+30,j*50);
+                        v.obs[i][j].setPos(j*50,i*50+30);
                         WallIndex++;
                     }
                     if(mask[i][j]==v.Blank){
-                        v.obs[i][j]=new Blank_c();
-                        v.obs[i][j].setPos(i*50+30,j*50);
+                        v.obs[i][j]=new Blank_c(j*50,i*50+30);
+
 
                     }
 
@@ -171,7 +182,7 @@ public class PlayGround extends JFrame implements KeyListener{
             }
 
         }
-       v.p1.setPos(0,30);
+       v.p1.indexi=0; v.p1.indexj=0;
 
 
 
@@ -199,100 +210,61 @@ public class PlayGround extends JFrame implements KeyListener{
     }
 
      public boolean moveRight_permition(Obstacle[][] d, MovingObject m){
-        Obstacle ob;
-        boolean flag1=false,flag2=false;
-        boolean permition=false;
-        int indexi=0,indexj=0;
-         for(int i=0; i<14;i++){
-             for(int j=0;j<14;j++) {
-                 if (((m.getxTopRight() + m.getStep()) >= d[i][j].xPos) && ((m.getxTopRight() + m.getStep()) <= (d[i][j].xPos + d[i][j].width)) && (m.getyTopRight() >= d[i][j].yPos) && (m.getyTopRight() <= (d[i][j].yPos + d[i][j].height))) {
-                     if (d[i][j].getID() == v.Blank) {
-                         permition = true;
-                     }
 
-                 }
-                 if (((m.getxDownRight() + m.getStep()) >= d[i][j].xPos) && ((m.getxDownRight() + m.getStep()) <= (d[i][j].xPos + d[i][j].width)) && (m.getyDownRight() >= d[i][j].yPos) && (m.getyDownRight() <= (d[i][j].yPos + d[i][j].height))){
-                     if (d[i][j].getID() == v.Blank) {
-                         permition = true;
-                     } else permition = false;
-
-
-                 }
+         boolean permition=false;
+         if(m.indexj!=13) {
+             if (d[m.indexi][m.indexj + 1].getID() == v.Blank) {
+                 permition = true;
+             } else {
+                 permition = false;
              }
          }
 
-      return permition;
+         return permition;
      }
 
 
 
     boolean  moveLeft_permition(Obstacle[][] d, MovingObject m){
-        Obstacle b=new Blank_c();
-        System.out.println(findAdjacent_left(d,m).getID());
-        if(findAdjacent_left(d,m).getID()==v.Blank){
-            return true;
-        }
-        else return false;
-    }
-    public Obstacle findAdjacent_left(Obstacle[][] d, MovingObject m){
-        Obstacle ob;
-        int indexi=0,indexj=0;
-        indexj=(int)(m.xPos-m.getWidth())/50;
-
-        for(int i=0;i<14;i++){
-            if(m.yPos+m.getHeight()<=i*50+80) {indexi=i;break;}
+        boolean permition=false;
+        if(m.indexj!=0) {
+            if (d[m.indexi][m.indexj - 1].getID() == v.Blank) {
+                permition = true;
+            } else {
+                permition = false;
+            }
         }
 
-        System.out.println("index i= "+ indexi+"  index J= "+indexj);
+        return permition;
 
-        return d[indexi][indexj];
     }
-
 
     boolean  moveUp_permition(Obstacle[][] d, MovingObject m){
-        Obstacle b=new Blank_c();
-        System.out.println(findAdjacent_up(d,m).getID());
-        if(findAdjacent_up(d,m).getID()==v.Blank){
-            return true;
-        }
-        else return false;
-    }
-    public Obstacle findAdjacent_up(Obstacle[][] d, MovingObject m){
-        Obstacle ob;
-        int indexi=0,indexj=0;
-        indexj=(int)(m.xPos+m.getWidth())/50;
-
-        for(int i=0;i<14;i++){
-            if(m.yPos+m.getHeight()/2<=i*50) {indexi=i;break;}
+        boolean permition=false;
+        if(m.indexi!=0) {
+            if (d[m.indexi-1][m.indexj].getID() == v.Blank) {
+                permition = true;
+            } else {
+                permition = false;
+            }
         }
 
-        System.out.println("index i= "+ indexi+"  index J= "+indexj);
-
-        return d[indexi][indexj];
+        return permition;
     }
-
 
     boolean  moveDown_permition(Obstacle[][] d, MovingObject m){
-        Obstacle b=new Blank_c();
-        System.out.println(findAdjacent_down(d,m).getID());
-        if(findAdjacent_down(d,m).getID()==v.Blank){
-            return true;
-        }
-        else return false;
-    }
-    public Obstacle findAdjacent_down(Obstacle[][] d, MovingObject m){
-        Obstacle ob;
-        int indexi=0,indexj=0;
-        indexj=(int)(m.xPos+m.getWidth())/50;
-
-        for(int i=0;i<14;i++){
-            if(m.yPos+m.getHeight()<=i*50+80) {indexi=i;break;}
+        boolean permition=false;
+        if(m.indexi!=13) {
+            if (d[m.indexi+1][m.indexj].getID() == v.Blank) {
+                permition = true;
+            } else {
+                permition = false;
+            }
         }
 
-        System.out.println("index i= "+ indexi+"  index J= "+indexj);
-
-        return d[indexi][indexj];
+        return permition;
     }
+
 
 
 
