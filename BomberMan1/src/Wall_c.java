@@ -20,6 +20,10 @@ public class Wall_c extends Obstacle {
     public boolean getToFireAction() {
         return false;
     }
+    @Override
+    public void bombReaction(){
+        changeToBlank_flag=false;
+    }
     public Image img = Toolkit.getDefaultToolkit().getImage("wall.png");
 
     @Override

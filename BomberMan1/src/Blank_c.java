@@ -19,6 +19,11 @@ public class Blank_c extends Obstacle {
         this.yPos=y;
 
     }
+    @Override
+    public void bombReaction(){
+
+    }
+
 
     private Integer lato = 20;
     Image woodenBox_img = Toolkit.getDefaultToolkit().getImage("WoodenBox.png");

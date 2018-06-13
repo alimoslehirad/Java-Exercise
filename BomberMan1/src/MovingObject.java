@@ -18,7 +18,7 @@ public abstract class MovingObject extends JFrame {
     public int indexj;
     public Integer xPos=indexi*50;
     public Integer yPos =indexj*50+30;
-
+//    public ObjectPool v=new ObjectPool();
     public Integer getxPos() {
         return xPos;
     }
@@ -92,6 +92,6 @@ public abstract class MovingObject extends JFrame {
 
     }
 
-    abstract void   draw(PlayGround P , Graphics2D g);
+    abstract void   draw( Graphics2D g , PlayGround P);
 
 }

@@ -13,8 +13,13 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JTextField;
 import java.awt.geom.*;
-public class PlayGround extends JFrame implements KeyListener{
+public class PlayGround extends JFrame implements KeyListener {
     ObjectPool v =new ObjectPool();
+    BomberMan p1 =new BomberMan("player1.png");
+    BomberMan p2 =new BomberMan("player2.png");
+
+
+
     boolean initFlag=false;
     public void playGroung_make(){
 
@@ -29,98 +34,30 @@ public class PlayGround extends JFrame implements KeyListener{
 
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(200, 200, 700, 730);
+        setBounds(200, 200, 700, 700+v.y0);
         setVisible(true);
         playGroundMask_init(v.frameMask);
-        v.bombNum=0;
+
+
+
+
         addKeyListener(this);
+        p2.indexi=0;
+        p2.indexj=13;
+        p2.rightKey=68;
+        p2.leftKey=65;
+        p2.downKey=83;
+        p2.upKey=87;
+        p2.bombingKey=81;
         initFlag=true;
+        p1.setPos();
+        p2.setPos();
         repaint();
-
-
-
     }
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == v.RightKey) {
-            if(moveRight_permition(v.obs,v.p1)) {
-                v.p1.move_right();
 
-                repaint();
-            }
-
-        }
-        else if(e.getKeyCode()==v.LeftKey){
-            if(moveLeft_permition(v.obs,v.p1)) {
-                v.p1.move_left();
-                repaint();
-            }
-        }
-        else if(e.getKeyCode()==v.DownKey){
-            if(moveDown_permition(v.obs,v.p1)) {
-                v.p1.move_down();
-                repaint();
-            }
-        }
-        else if(e.getKeyCode()==v.UpKey){
-            if(moveUp_permition(v.obs,v.p1)) {
-                v.p1.move_up();
-                repaint();
-            }
-        }
-        else if (e.getKeyCode()==66 && v.bombNum!=9){    // b
-
-
-            v.b1[v.bombNum].xPos=v.p1.xPos;
-            v.b1[v.bombNum].yPos=v.p1.yPos;
-            v.b1[v.bombNum].indexi=v.p1.indexi;
-            v.b1[v.bombNum].indexj=v.p1.indexj;
-
-            v.b1[v.bombNum].state=v.BreadytToFire;
-            v.obs[v.p1.indexi][v.p1.indexj]=v.b1[v.bombNum];
-
-        }
-        else if(e.getKeyCode()==88)   {       //x
-
-
-            if(v.b1[v.bombNum].state==v.BreadytToFire){
-                int indexi=v.b1[v.bombNum].indexi;
-                int indexj=v.b1[v.bombNum].indexj;
-               if(indexi<13){
-                    if(v.obs[indexi+1][indexj].getToFireAction()) {
-                        v.obs[indexi + 1][indexj] = new Blank_c(v.obs[indexi + 1][indexj].getxPos(), v.obs[indexi + 1][indexj].getyPos());
-                    }
-               }
-                if(indexi>0) {
-                    if (v.obs[indexi - 1][indexj].getToFireAction()) {
-                        v.obs[indexi - 1][indexj] = new Blank_c(v.obs[indexi - 1][indexj].getxPos(), v.obs[indexi - 1][indexj].getyPos());
-                    }
-                }
-                if(indexj<13) {
-                    if (v.obs[indexi][indexj + 1].getToFireAction()) {
-                        v.obs[indexi][indexj + 1] = new Blank_c(v.obs[indexi][indexj + 1].getxPos(), v.obs[indexi][indexj + 1].getyPos());
-                    }
-                }
-                if(indexj>0) {
-                    if (v.obs[indexi][indexj - 1].getToFireAction()) {
-                        v.obs[indexi][indexj - 1] = new Blank_c(v.obs[indexi][indexj - 1].getxPos(), v.obs[indexi][indexj - 1].getyPos());
-                    }
-                }
-
-                v.obs[v.b1[v.bombNum].indexi][v.b1[v.bombNum].indexj]  =new Blank_c(v.obs[v.b1[v.bombNum].indexi][v.b1[v.bombNum].indexj].getxPos(), v.obs[v.b1[v.bombNum].indexi][v.b1[v.bombNum].indexj].getyPos());
-                repaint();
-
-            }
-
-
-        }
-        //System.out.println(e.getKeyCode());
-    }
-    public void keyReleased(KeyEvent e) {
-
-    }
     public void playGroundMask_init(int[][] mask){
         try {
-             v.fileName = "PlayGroundMap.txt";
+            v.fileName = "PlayGroundMap.txt";
             FileReader fileReader = new FileReader(v.fileName);
             v.bufferedReader = new BufferedReader(fileReader);
 
@@ -143,7 +80,7 @@ public class PlayGround extends JFrame implements KeyListener{
         BocCnt=0; boolean boxNum_flag=false; String[] strArray;int BoxIndex=0,WallIndex=28,BlankIndex=28+49;
         for(int i=0;i<14;i++) {
             try {
-              String  line = v.bufferedReader.readLine();
+                String  line = v.bufferedReader.readLine();
 
                 if (line == null) v.bufferedReader.close();
                 strArray=line.split(" ");
@@ -153,16 +90,16 @@ public class PlayGround extends JFrame implements KeyListener{
                     mask[i][j]=Integer.parseInt(strArray[j]);
                     if(mask[i][j]==v.BoxID){
                         v.obs[i][j]=new Box_c();
-                        v.obs[i][j].setPos(j*50,i*50+30);
+                        v.obs[i][j].setPos(j*50,i*50+v.y0);
 
                     }
-                     if(mask[i][j]==v.wallID){
-                         v.obs[i][j]=new Wall_c();
-                        v.obs[i][j].setPos(j*50,i*50+30);
+                    if(mask[i][j]==v.wallID){
+                        v.obs[i][j]=new Wall_c();
+                        v.obs[i][j].setPos(j*50,i*50+v.y0);
                         WallIndex++;
                     }
                     if(mask[i][j]==v.Blank){
-                        v.obs[i][j]=new Blank_c(j*50,i*50+30);
+                        v.obs[i][j]=new Blank_c(j*50,i*50+v.y0);
 
 
                     }
@@ -182,14 +119,9 @@ public class PlayGround extends JFrame implements KeyListener{
             }
 
         }
-       v.p1.indexi=0; v.p1.indexj=0;
 
 
 
-
-    }
-    public void keyTyped(KeyEvent e) {}
-     public void keylistener( KeyEvent e){
 
 
     }
@@ -203,69 +135,27 @@ public class PlayGround extends JFrame implements KeyListener{
                 }
 
             }
-            v.p1.draw(this,g2);
+            p1.draw(g2 , this);
+            p2.draw(g2,this);
 
         }
 
     }
 
-     public boolean moveRight_permition(Obstacle[][] d, MovingObject m){
-
-         boolean permition=false;
-         if(m.indexj!=13) {
-             if (d[m.indexi][m.indexj + 1].getID() == v.Blank) {
-                 permition = true;
-             } else {
-                 permition = false;
-             }
-         }
-
-         return permition;
-     }
-
-
-
-    boolean  moveLeft_permition(Obstacle[][] d, MovingObject m){
-        boolean permition=false;
-        if(m.indexj!=0) {
-            if (d[m.indexi][m.indexj - 1].getID() == v.Blank) {
-                permition = true;
-            } else {
-                permition = false;
-            }
-        }
-
-        return permition;
+    public void keyPressed(KeyEvent e) {
+       p1.keyPressed1Act(e.getKeyCode(),v.obs,this);
+       p2.keyPressed1Act(e.getKeyCode(),v.obs,this);
+      // p1.b.bombـexplosion(e.getKeyCode(),v.obs);
+     //  p2.b.bombـexplosion(e.getKeyCode(),v.obs);
+        //System.out.println(e.getKeyCode());
+        repaint();
+    }
+    public void keyReleased(KeyEvent e) {
 
     }
 
-    boolean  moveUp_permition(Obstacle[][] d, MovingObject m){
-        boolean permition=false;
-        if(m.indexi!=0) {
-            if (d[m.indexi-1][m.indexj].getID() == v.Blank) {
-                permition = true;
-            } else {
-                permition = false;
-            }
-        }
+    @Override
+    public void keyTyped(KeyEvent keyEvent) {
 
-        return permition;
     }
-
-    boolean  moveDown_permition(Obstacle[][] d, MovingObject m){
-        boolean permition=false;
-        if(m.indexi!=13) {
-            if (d[m.indexi+1][m.indexj].getID() == v.Blank) {
-                permition = true;
-            } else {
-                permition = false;
-            }
-        }
-
-        return permition;
-    }
-
-
-
-
 }

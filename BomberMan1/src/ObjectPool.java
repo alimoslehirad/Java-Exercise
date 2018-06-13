@@ -3,8 +3,8 @@ import java.io.BufferedReader;
 
 public class ObjectPool {
     int[][] frameMask;
-    BomberMan p1;
-    int bombNum;
+   // BomberMan p1;
+
     public  final int BoxID=2;
     public   final int wallID=3;
     public  final int BombID=1;
@@ -21,26 +21,25 @@ public class ObjectPool {
     public final byte BlankNum=200-(BoXNum+WallNum);
     public final byte BOX_Rappid=100;
     public final byte BOX_Empty=110;
-
+    int H0;
+    int y0;
+ //  BomberMan p1;
     public  final byte BIdle=2;
 
     public BufferedReader bufferedReader;
     public String fileName;
-    Bomb[] b1;
+
     Obstacle[][] obs;
 
     public ObjectPool() {
         frameMask = new int[14][14];
-        p1 = new BomberMan();
-        b1 = new Bomb[10];
+       // p1 = new BomberMan();
+
         obs = new Obstacle[14][14];
-
-        for (int i = 0; i < 10; i++) {
-            b1[i] = new Bomb();
-        }
+        H0=30;
+        y0=H0+0;
 
 
-        bombNum = 0;
     }
 
 

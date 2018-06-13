@@ -13,6 +13,11 @@ public class Box_c extends Obstacle {
     private int ID=2;
 
     @Override
+    public void bombReaction(){
+        changeToBlank_flag=true;
+    }
+
+    @Override
     public boolean getToFireAction() {
         return true;
     }

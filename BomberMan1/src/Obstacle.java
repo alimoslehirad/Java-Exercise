@@ -15,8 +15,9 @@ public abstract class Obstacle extends JFrame{
     private Integer lato = 30;
     public int width=50;
     public int height=50;
-
+    public boolean changeToBlank_flag=false;
     public abstract int getID();
+    public abstract void bombReaction();
     public abstract boolean getToFireAction();
     public Integer getxPos() {
         return xPos;
