@@ -15,9 +15,10 @@ import javax.swing.JTextField;
 import java.awt.geom.*;
 public class PlayGround extends JFrame implements KeyListener {
     ObjectPool v =new ObjectPool();
-    BomberMan p1 =new BomberMan("player1.png");
-    BomberMan p2 =new BomberMan("player2.png");
-
+//    BomberMan p1 =new BomberMan("player1.png");
+//    BomberMan p2 =new BomberMan("player2.png");
+    BomberMan[] player = new BomberMan[4];
+    GameController g =new GameController();
 
 
     boolean initFlag=false;
@@ -37,21 +38,18 @@ public class PlayGround extends JFrame implements KeyListener {
         setBounds(200, 200, 700, 700+v.y0);
         setVisible(true);
         playGroundMask_init(v.frameMask);
-
-
-
-
         addKeyListener(this);
-        p2.indexi=0;
-        p2.indexj=13;
-        p2.rightKey=68;
-        p2.leftKey=65;
-        p2.downKey=83;
-        p2.upKey=87;
-        p2.bombingKey=81;
+        player[0]=new BomberMan("player1.png",0,0);
+        player[1]=new BomberMan("player2.png",0,13);
+        player[2]=new BomberMan("player1.png",13,0);
+        player[3]=new BomberMan("player1.png",13,13);
+        for(int i=0;i<4;i++){
+            player[i].setPosition();
+        }
+
+
+
         initFlag=true;
-        p1.setPos();
-        p2.setPos();
         repaint();
     }
 
@@ -135,20 +133,17 @@ public class PlayGround extends JFrame implements KeyListener {
                 }
 
             }
-            p1.draw(g2 , this);
-            p2.draw(g2,this);
+            for(int i=0;i<4;i++) {
+                player[i].draw(g2, this);
+            }
 
         }
 
     }
 
     public void keyPressed(KeyEvent e) {
-       p1.keyPressed1Act(e.getKeyCode(),v.obs,this);
-       p2.keyPressed1Act(e.getKeyCode(),v.obs,this);
-      // p1.b.bombـexplosion(e.getKeyCode(),v.obs);
-     //  p2.b.bombـexplosion(e.getKeyCode(),v.obs);
-        //System.out.println(e.getKeyCode());
-        repaint();
+       g.keyPressedAct(e.getKeyCode(),v.obs,this);
+       repaint();
     }
     public void keyReleased(KeyEvent e) {
 

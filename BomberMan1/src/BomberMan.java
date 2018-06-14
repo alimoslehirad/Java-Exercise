@@ -23,127 +23,55 @@ public class BomberMan extends MovingObject  {
     ObjectPool v=new ObjectPool();
 
     Image bombermanCircle ;
+    public BomberMan(String s , int indexi, int indexj){
 
-    public void bombing(){
+        this.indexi=indexi;
+        this.indexj=indexj;
 
-    }
-    public BomberMan(String s){
-
-        indexi=0; indexj=0;
-        repaint();
-        rightKey=39;
-        leftKey=37;
-        upKey=38;
-        downKey=40;
-        bombingKey=10;
         bombermanCircle=Toolkit.getDefaultToolkit().getImage(s);
 
     }
-    public void setPos(){
+
+    public void setPosition(){
         xPos=indexj*50;
         yPos=indexi*50+30;
     }
 
-    public void keyPressed1Act(int KeyCode , Obstacle[][] obs,PlayGround P) {
-        if (KeyCode ==rightKey) {
-            if(moveRight_permition(obs,this)) {
-                move_right();
-                System.out.println("right");
-                repaint();
-            }
 
-        }
-        else if(KeyCode==leftKey){
-            if(moveLeft_permition(obs,this)) {
-                move_left();
+   
 
-            }
-        }
-        else if(KeyCode==downKey){
-            if(moveDown_permition(obs,this)) {
-                move_down();
 
-            }
+    public void react(int cmd,Obstacle[][] obs, PlayGround P){
+        if(cmd==0){
+            move_up();
         }
-        else if(KeyCode==upKey){
-            if(moveUp_permition(obs,this)) {
-                move_up();
-
-            }
+        else if(cmd==1){
+            move_down();
         }
-        else if (KeyCode==bombingKey ){
+        else if(cmd==2){
+            move_left();
+        }
+        else if(cmd==3){
+            move_right();
+        }
+        else if(cmd==4){
             bombing(obs,P);
-
-
         }
 
-        //System.out.println(e.getKeyCode());
     }
+
 
     public void bombing(Obstacle[][] obs, PlayGround P){
-       b.xPos=this.xPos;
-       b.yPos=this.yPos;
-       b.indexi=indexi;
-       b.indexj=indexj;
-       b.state=v.BreadytToFire;
-       obs[indexi][indexj]=b;
-       b.BombTimer_start(obs,P);
-    }
-    public boolean moveRight_permition(Obstacle[][] d, MovingObject m){
-
-        boolean permition=false;
-        if(m.indexj!=13) {
-            if (d[m.indexi][m.indexj + 1].getID() == v.Blank) {
-                permition = true;
-            } else {
-                permition = false;
-            }
-        }
-
-        return permition;
+        b.xPos=this.xPos;
+        b.yPos=this.yPos;
+        b.indexi=indexi;
+        b.indexj=indexj;
+        b.state=v.BreadytToFire;
+        obs[indexi][indexj]=b;
+        b.BombTimer_start(obs,P);
     }
 
 
-
-    boolean  moveLeft_permition(Obstacle[][] d, MovingObject m){
-        boolean permition=false;
-        if(m.indexj!=0) {
-            if (d[m.indexi][m.indexj - 1].getID() == v.Blank) {
-                permition = true;
-            } else {
-                permition = false;
-            }
-        }
-
-        return permition;
-
-    }
-
-    boolean  moveUp_permition(Obstacle[][] d, MovingObject m){
-        boolean permition=false;
-        if(m.indexi!=0) {
-            if (d[m.indexi-1][m.indexj].getID() == v.Blank) {
-                permition = true;
-            } else {
-                permition = false;
-            }
-        }
-
-        return permition;
-    }
-
-    boolean  moveDown_permition(Obstacle[][] d, MovingObject m){
-        boolean permition=false;
-        if(m.indexi!=13) {
-            if (d[m.indexi+1][m.indexj].getID() == v.Blank) {
-                permition = true;
-            } else {
-                permition = false;
-            }
-        }
-
-        return permition;
-    }
 
 
 

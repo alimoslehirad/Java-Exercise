@@ -70,6 +70,8 @@ public abstract class MovingObject extends JFrame {
         this.height = height;
     }
 
+
+
     public void move_right() {
 
         indexj++; xPos=indexj*50;
