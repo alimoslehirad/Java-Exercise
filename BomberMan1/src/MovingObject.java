@@ -94,6 +94,6 @@ public abstract class MovingObject extends JFrame {
 
     }
 
-    abstract void   draw( Graphics2D g , PlayGround P);
+    abstract void   draw( Graphics2D g , BomberMap P);
 
 }

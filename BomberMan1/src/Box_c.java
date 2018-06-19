@@ -9,9 +9,16 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JTextField;
 public class Box_c extends Obstacle {
-    public byte content;
+    //public int content;
     private int ID=2;
-
+    public Box_c(){
+        if(Math.random()>.95){
+            this.content= 2;
+        }
+        else{
+            this.content=1;
+        }
+    }
     @Override
     public void bombReaction(){
         changeToBlank_flag=true;
@@ -30,7 +37,7 @@ public class Box_c extends Obstacle {
     public Image img = Toolkit.getDefaultToolkit().getImage("WoodenBox.png");
 
     @Override
-    public void draw(PlayGround P , Graphics2D g){
+    public void draw(BomberMap P , Graphics2D g){
     g.drawImage(this.img, xPos, yPos, P);
 
 }

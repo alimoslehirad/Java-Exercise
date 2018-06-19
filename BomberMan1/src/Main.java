@@ -4,14 +4,14 @@ public class Main {
     public static final int y=14;
     public static void main(String[] args) {
 	// write your code here
-       // playGroundMap_text();
-        PlayGround g =new PlayGround("BomberMan Game");
+       // BomberMap_text();
+        BomberMap g =new BomberMap("BomberMan Game");
 
         
     }
-    public static void playGroundMap_text(){
+    public static void BomberMap_text(){
         try{
-            FileOutputStream fout=new FileOutputStream("PlayGroundMap.txt");
+            FileOutputStream fout=new FileOutputStream("BomberMap.txt");
             String s="Welcome to javaTpoint.";
             byte b[]=s.getBytes();//converting string into byte array
             s="";

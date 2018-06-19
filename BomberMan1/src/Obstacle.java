@@ -17,6 +17,7 @@ public abstract class Obstacle extends JFrame{
     public int height=50;
     public boolean changeToBlank_flag=false;
     public abstract int getID();
+    public int content;
     public abstract void bombReaction();
     public abstract boolean getToFireAction();
     public Integer getxPos() {
@@ -40,5 +41,5 @@ public abstract class Obstacle extends JFrame{
     }
 
 
-    abstract void   draw(PlayGround P , Graphics2D g);
+    abstract void   draw(BomberMap P , Graphics2D g);
 }

@@ -21,14 +21,15 @@ public class GameController {
         }
 
     }
-    public void keyPressedAct(int KeyCode , Obstacle[][] obs,PlayGround P) {
+    public void keyPressedAct(int KeyCode , Obstacle[][] obs,BomberMap P) {
         int[] x = new int[2];
         findTask(keyConf.keys, KeyCode, x);
         if (permitionToTask(x,obs,P)) {
+
             P.player[x[0]].react(x[1],obs,P);
         }
     }
-     public boolean permitionToTask(int[] x , Obstacle[][] obs , PlayGround P) {
+     public boolean permitionToTask(int[] x , Obstacle[][] obs , BomberMap P) {
          boolean permition=false;
          if (x[1] == UP) {
              permition =moveUp_permition(obs, P.player[x[0]]);

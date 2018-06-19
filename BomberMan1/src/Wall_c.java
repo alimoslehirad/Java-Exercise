@@ -27,7 +27,7 @@ public class Wall_c extends Obstacle {
     public Image img = Toolkit.getDefaultToolkit().getImage("wall.png");
 
     @Override
-    public void draw(PlayGround P, Graphics2D g) {
+    public void draw(BomberMap P, Graphics2D g) {
         g.drawImage(this.img, xPos, yPos, P);
 
     }

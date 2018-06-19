@@ -17,9 +17,9 @@ public class BomberMan extends MovingObject  {
     public int upKey;
     public int downKey;
     public int bombingKey;
+    public int bombingFlame;
 
-
-    Bomb b=new Bomb();
+    Bomb b;
     ObjectPool v=new ObjectPool();
 
     Image bombermanCircle ;
@@ -27,7 +27,7 @@ public class BomberMan extends MovingObject  {
 
         this.indexi=indexi;
         this.indexj=indexj;
-
+        bombingFlame=1;
         bombermanCircle=Toolkit.getDefaultToolkit().getImage(s);
 
     }
@@ -41,31 +41,53 @@ public class BomberMan extends MovingObject  {
    
 
 
-    public void react(int cmd,Obstacle[][] obs, PlayGround P){
+    public void react(int cmd,Obstacle[][] obs, BomberMap P){
         if(cmd==0){
             move_up();
+            if(obs[indexi][indexj].content==2) {
+                bombingFlame=2;
+                obs[indexi][indexj].content=1;
+            }
         }
         else if(cmd==1){
             move_down();
+            if(obs[indexi][indexj].content==2) {
+                bombingFlame=2;
+                obs[indexi][indexj].content=1;
+            }
         }
         else if(cmd==2){
             move_left();
+            if(obs[indexi][indexj].content==2) {
+                bombingFlame=2;
+                obs[indexi][indexj].content=1;
+            }
         }
         else if(cmd==3){
             move_right();
+            if(obs[indexi][indexj].content==2) {
+                bombingFlame=2;
+                obs[indexi][indexj].content=1;
+            }
         }
         else if(cmd==4){
             bombing(obs,P);
+            if(obs[indexi][indexj].content==2) {
+                bombingFlame=2;
+                obs[indexi][indexj].content=1;
+            }
         }
 
     }
 
 
-    public void bombing(Obstacle[][] obs, PlayGround P){
+    public void bombing(Obstacle[][] obs, BomberMap P){
+        b=new Bomb();
         b.xPos=this.xPos;
         b.yPos=this.yPos;
         b.indexi=indexi;
         b.indexj=indexj;
+        b.bombFlame=bombingFlame;
         b.state=v.BreadytToFire;
         obs[indexi][indexj]=b;
         b.BombTimer_start(obs,P);
@@ -76,7 +98,7 @@ public class BomberMan extends MovingObject  {
 
 
 
-    public void draw( Graphics2D g , PlayGround P){
+    public void draw( Graphics2D g , BomberMap P){
         g.drawImage(this.bombermanCircle, xPos, yPos, P);
 
     }

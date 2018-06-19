@@ -13,9 +13,9 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JTextField;
 import java.awt.geom.*;
-public class PlayGround extends JFrame implements KeyListener {
+public class BomberMap extends JFrame implements KeyListener {
     ObjectPool v =new ObjectPool();
-//    BomberMan p1 =new BomberMan("player1.png");
+    //    BomberMan p1 =new BomberMan("player1.png");
 //    BomberMan p2 =new BomberMan("player2.png");
     BomberMan[] player = new BomberMan[4];
     GameController g =new GameController();
@@ -31,13 +31,13 @@ public class PlayGround extends JFrame implements KeyListener {
 
     }
 
-    public PlayGround(String title) {
+    public BomberMap(String title) {
 
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(200, 200, 700, 700+v.y0);
         setVisible(true);
-        playGroundMask_init(v.frameMask);
+        BomberMapMask_init(v.frameMask);
         addKeyListener(this);
         player[0]=new BomberMan("player1.png",0,0);
         player[1]=new BomberMan("player2.png",0,13);
@@ -53,9 +53,9 @@ public class PlayGround extends JFrame implements KeyListener {
         repaint();
     }
 
-    public void playGroundMask_init(int[][] mask){
+    public void BomberMapMask_init(int[][] mask){
         try {
-            v.fileName = "PlayGroundMap.txt";
+            v.fileName = "BomberMap.txt";
             FileReader fileReader = new FileReader(v.fileName);
             v.bufferedReader = new BufferedReader(fileReader);
 
@@ -97,7 +97,7 @@ public class PlayGround extends JFrame implements KeyListener {
                         WallIndex++;
                     }
                     if(mask[i][j]==v.Blank){
-                        v.obs[i][j]=new Blank_c(j*50,i*50+v.y0);
+                        v.obs[i][j]=new Blank_c(j*50,i*50+v.y0,1);
 
 
                     }
@@ -123,9 +123,11 @@ public class PlayGround extends JFrame implements KeyListener {
 
 
     }
-     public void paint(Graphics g) {
+    public void paint(Graphics g) {
         if(initFlag) {
             Graphics2D g2 = (Graphics2D) g;
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, 700, 730);
             for (int i = 0; i < 14; i++) {
                 for(int j=0;j<14;j++) {
                     //System.out.println("graphic part i= "+ i);
@@ -142,8 +144,8 @@ public class PlayGround extends JFrame implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-       g.keyPressedAct(e.getKeyCode(),v.obs,this);
-       repaint();
+        g.keyPressedAct(e.getKeyCode(),v.obs,this);
+        repaint();
     }
     public void keyReleased(KeyEvent e) {
 
