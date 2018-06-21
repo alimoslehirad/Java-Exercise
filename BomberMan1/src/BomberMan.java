@@ -41,56 +41,47 @@ public class BomberMan extends MovingObject  {
    
 
 
-    public void react(int cmd,Obstacle[][] obs, BomberMap P){
-        if(cmd==0){
+    public void react(int cmd,Obstacle[][] obs,Layer2[][] obs2, BomberMap P) {
+        if (cmd == 0) {
             move_up();
-            if(obs[indexi][indexj].content==2) {
-                bombingFlame=2;
-                obs[indexi][indexj].content=1;
+            if (obs[indexi][indexj].getID() == 10) {
+                bombingFlame = 2;
+                obs[indexi][indexj] = new Blank_c(obs[indexi][indexj].getxPos(), obs[indexi][indexj].getyPos());
             }
-        }
-        else if(cmd==1){
+        } else if (cmd == 1) {
             move_down();
-            if(obs[indexi][indexj].content==2) {
-                bombingFlame=2;
-                obs[indexi][indexj].content=1;
+            if (obs[indexi][indexj].getID() == 10) {
+                bombingFlame = 2;
+                obs[indexi][indexj] = new Blank_c(obs[indexi][indexj].getxPos(), obs[indexi][indexj].getyPos());
             }
-        }
-        else if(cmd==2){
+        } else if (cmd == 2) {
             move_left();
-            if(obs[indexi][indexj].content==2) {
-                bombingFlame=2;
-                obs[indexi][indexj].content=1;
+            if (obs[indexi][indexj].getID() == 10) {
+                bombingFlame = 2;
+                obs[indexi][indexj] = new Blank_c(obs[indexi][indexj].getxPos(), obs[indexi][indexj].getyPos());
             }
-        }
-        else if(cmd==3){
+        } else if (cmd == 3) {
             move_right();
-            if(obs[indexi][indexj].content==2) {
-                bombingFlame=2;
-                obs[indexi][indexj].content=1;
+            if (obs[indexi][indexj].getID() == 10) {
+                bombingFlame = 2;
+                obs[indexi][indexj] = new Blank_c(obs[indexi][indexj].getxPos(), obs[indexi][indexj].getyPos());
             }
-        }
-        else if(cmd==4){
-            bombing(obs,P);
-            if(obs[indexi][indexj].content==2) {
-                bombingFlame=2;
-                obs[indexi][indexj].content=1;
-            }
+        } else if (cmd == 4) {
+            bombing(obs,obs2, P);
+
         }
 
     }
 
 
-    public void bombing(Obstacle[][] obs, BomberMap P){
-        b=new Bomb();
-        b.xPos=this.xPos;
-        b.yPos=this.yPos;
+    public void bombing(Obstacle[][] obs,Layer2[][] obs2, BomberMap P){
+        b=new Bomb(this.xPos,this.yPos);
         b.indexi=indexi;
         b.indexj=indexj;
         b.bombFlame=bombingFlame;
         b.state=v.BreadytToFire;
-        obs[indexi][indexj]=b;
-        b.BombTimer_start(obs,P);
+        obs2[indexi][indexj]=b;
+        b.BombTimer_start(obs,obs2,P);
     }
 
 

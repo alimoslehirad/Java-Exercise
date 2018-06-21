@@ -1,3 +1,6 @@
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class GameController {
     BomberKeyConfig keyConf=new BomberKeyConfig();
     public static final int UP = 0;
@@ -6,6 +9,15 @@ public class GameController {
     public static final int RIGHT = 3;
     public static final int BOMB = 4;
     public  final int Blank=0;
+
+
+
+
+    public  GameController(){
+
+    }
+
+
     public void findTask(int[][] key , int keyCode, int[] x){
         boolean flag=false;
         for(int i=0;i<4;i++){
@@ -21,12 +33,12 @@ public class GameController {
         }
 
     }
-    public void keyPressedAct(int KeyCode , Obstacle[][] obs,BomberMap P) {
+    public void keyPressedAct(int KeyCode , Obstacle[][] obs,Layer2[][] obs2,BomberMap P) {
         int[] x = new int[2];
         findTask(keyConf.keys, KeyCode, x);
         if (permitionToTask(x,obs,P)) {
 
-            P.player[x[0]].react(x[1],obs,P);
+            P.player[x[0]].react(x[1],obs,obs2,P);
         }
     }
      public boolean permitionToTask(int[] x , Obstacle[][] obs , BomberMap P) {

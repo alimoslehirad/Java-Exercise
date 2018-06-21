@@ -10,14 +10,31 @@ import javax.swing.Timer;
 import javax.swing.JTextField;
 public class Box_c extends Obstacle {
     //public int content;
+    Bomb b;
+    double rand;
+    public Layer2[] con;
     private int ID=2;
-    public Box_c(){
-        if(Math.random()>.95){
-            this.content= 2;
+    public Box_c(int x, int y){
+
+        con=new Layer2[4];
+
+        this.xPos=x;
+        this.yPos=y;
+
+        con[0]=new Well_c(this.xPos,this.yPos);
+        con[1]=new Bomb(this.xPos,this.yPos);
+        con[2]=new Flame(this.xPos,this.yPos);
+        con[3]=new BlankL2();
+        rand=Math.random();
+        System.out.println(rand);
+        for(int i=0;i<4;i++) {
+            if (rand <con[i].probability){
+                this.content=con[i];
+                break;
+            }
         }
-        else{
-            this.content=1;
-        }
+
+
     }
     @Override
     public void bombReaction(){
@@ -40,6 +57,6 @@ public class Box_c extends Obstacle {
     public void draw(BomberMap P , Graphics2D g){
     g.drawImage(this.img, xPos, yPos, P);
 
-}
+    }
 
 }

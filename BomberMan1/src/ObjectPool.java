@@ -21,6 +21,7 @@ public class ObjectPool {
     public final byte BlankNum=200-(BoXNum+WallNum);
     public final byte BOX_Rappid=100;
     public final byte BOX_Empty=110;
+    public Layer2[][] obs2;
     int H0;
     int y0;
  //  BomberMan p1;
@@ -36,6 +37,12 @@ public class ObjectPool {
        // p1 = new BomberMan();
 
         obs = new Obstacle[14][14];
+        obs2=new Layer2[14][14];
+        for(int i=0; i<14;i++){
+            for(int j=0;j<14;j++){
+                obs2[i][j]=new BlankL2();
+            }
+        }
         H0=30;
         y0=H0+0;
 

@@ -10,16 +10,21 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.*;
 import javax.swing.JFrame;
-import javax.swing.Timer;
+//import javax.swing.Timer;
 import javax.swing.JTextField;
 import java.awt.geom.*;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import java.util.TimerTask;
+
 public class BomberMap extends JFrame implements KeyListener {
     ObjectPool v =new ObjectPool();
-    //    BomberMan p1 =new BomberMan("player1.png");
-//    BomberMan p2 =new BomberMan("player2.png");
+
     BomberMan[] player = new BomberMan[4];
     GameController g =new GameController();
-
+    Timer timer,timer1;
+    public int well_cnt;
 
     boolean initFlag=false;
     public void playGroung_make(){
@@ -48,8 +53,38 @@ public class BomberMap extends JFrame implements KeyListener {
         }
 
 
-
         initFlag=true;
+        repaint();
+        timer = new Timer();
+        timer.schedule(new RemindTask(),160*1000);
+        well_cnt=0;
+    }
+    class RemindTask extends TimerTask {
+        public void run() {
+            System.out.println("Game Time's up!");
+            wellGenerator();
+            timer.cancel(); //Terminate the timer thread
+        }
+    }
+
+    class RemindTask2 extends TimerTask {
+        public void run() {
+            System.out.println("Well generator Time's up!");
+            if(well_cnt<50) {
+                wellGenerator();
+            }
+            else {
+                timer1.cancel(); //Terminate the timer thread
+            }
+        }
+    }
+    public void wellGenerator(){
+        timer1 = new Timer();
+        timer1.schedule(new RemindTask2(),3*1000);
+        int indexi=(int)(Math.random()*13);
+        int indexj=(int)(Math.random()*13);
+        v.obs2[indexi][indexj]=new Well_c( v.obs[indexi][indexj].xPos, v.obs[indexi][indexj].yPos);
+        well_cnt++;
         repaint();
     }
 
@@ -87,8 +122,7 @@ public class BomberMap extends JFrame implements KeyListener {
 //                    System.out.println("j= "+j);
                     mask[i][j]=Integer.parseInt(strArray[j]);
                     if(mask[i][j]==v.BoxID){
-                        v.obs[i][j]=new Box_c();
-                        v.obs[i][j].setPos(j*50,i*50+v.y0);
+                        v.obs[i][j]=new Box_c(j*50,i*50+v.y0);
 
                     }
                     if(mask[i][j]==v.wallID){
@@ -97,7 +131,7 @@ public class BomberMap extends JFrame implements KeyListener {
                         WallIndex++;
                     }
                     if(mask[i][j]==v.Blank){
-                        v.obs[i][j]=new Blank_c(j*50,i*50+v.y0,1);
+                        v.obs[i][j]=new Blank_c(j*50,i*50+v.y0);
 
 
                     }
@@ -118,10 +152,6 @@ public class BomberMap extends JFrame implements KeyListener {
 
         }
 
-
-
-
-
     }
     public void paint(Graphics g) {
         if(initFlag) {
@@ -135,6 +165,13 @@ public class BomberMap extends JFrame implements KeyListener {
                 }
 
             }
+            for (int i = 0; i < 14; i++) {
+                for(int j=0;j<14;j++) {
+                    //System.out.println("graphic part i= "+ i);
+                    v.obs2[i][j].draw(this, g2);
+                }
+
+            }
             for(int i=0;i<4;i++) {
                 player[i].draw(g2, this);
             }
@@ -144,7 +181,7 @@ public class BomberMap extends JFrame implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-        g.keyPressedAct(e.getKeyCode(),v.obs,this);
+        g.keyPressedAct(e.getKeyCode(),v.obs,v.obs2,this);
         repaint();
     }
     public void keyReleased(KeyEvent e) {

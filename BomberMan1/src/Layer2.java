@@ -8,18 +8,17 @@ import java.awt.event.*;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JTextField;
-public abstract class Obstacle extends JFrame{
+public abstract class Layer2 extends JFrame{
     public double probability;
     public Integer xPos;
     public Integer yPos ;
     private Integer lato = 30;
     public int width=50;
     public int height=50;
-    public Layer2 content;
+
 
     public boolean changeToBlank_flag=false;
-    public Obstacle(){
-        content=new BlankL2();
+    public Layer2(){
 
     }
     public abstract int getID();

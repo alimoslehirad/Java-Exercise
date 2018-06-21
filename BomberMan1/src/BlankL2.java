@@ -8,21 +8,14 @@ import java.awt.event.*;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JTextField;
-public class Blank_c extends Obstacle {
+public class BlankL2 extends Layer2 {
 
     private int ID=0;
     public int boxContent;
     public  int getID(){
         return this.ID;
     }
-    public Blank_c(int x, int y ){
-        this.xPos=x;
-        this.yPos=y;
-       probability=.5;
-    }
-    public Blank_c(){
 
-    }
     @Override
     public void bombReaction(){
 
@@ -36,11 +29,8 @@ public class Blank_c extends Obstacle {
         return false;
     }
 
-    Image img = Toolkit.getDefaultToolkit().getImage("flame.png");
-    public void draw(BomberMap P , Graphics2D g){
 
-            g.setColor(Color.WHITE);
-            g.fillRect(xPos, yPos, 50, 50);
+    public void draw(BomberMap P , Graphics2D g){
 
     }
 

@@ -9,7 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 import javax.swing.JTextField;
 public class Wall_c extends Obstacle {
-
+    public Wall_c(){
+        probability=0;
+    }
     private Integer lato = 20;
     private int ID=3;
     @Override
