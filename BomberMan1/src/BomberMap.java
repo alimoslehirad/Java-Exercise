@@ -28,19 +28,14 @@ public class BomberMap extends JFrame implements KeyListener {
 
     boolean initFlag=false;
     public void playGroung_make(){
-
         JPanel panel =new JPanel();
-
-
-
-
     }
 
-    public BomberMap(String title) {
+    public BomberMap(String title , int x, int y) {
 
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(200, 200, 700, 700+v.y0);
+        setBounds(200, 200, x, y);
         setVisible(true);
         BomberMapMask_init(v.frameMask);
         addKeyListener(this);
@@ -83,7 +78,7 @@ public class BomberMap extends JFrame implements KeyListener {
         timer1.schedule(new RemindTask2(),3*1000);
         int indexi=(int)(Math.random()*13);
         int indexj=(int)(Math.random()*13);
-        v.obs2[indexi][indexj]=new Well_c( v.obs[indexi][indexj].xPos, v.obs[indexi][indexj].yPos);
+        v.obs[indexi][indexj]=new Well_c( v.obs[indexi][indexj].xPos, v.obs[indexi][indexj].yPos);
         well_cnt++;
         repaint();
     }
@@ -165,15 +160,16 @@ public class BomberMap extends JFrame implements KeyListener {
                 }
 
             }
-            for (int i = 0; i < 14; i++) {
-                for(int j=0;j<14;j++) {
-                    //System.out.println("graphic part i= "+ i);
-                    v.obs2[i][j].draw(this, g2);
-                }
-
-            }
+//            for (int i = 0; i < 14; i++) {
+//                for(int j=0;j<14;j++) {
+//                    //System.out.println("graphic part i= "+ i);
+//                    v.obs2[i][j].draw(this, g2);
+//                }
+//
+//            }
             for(int i=0;i<4;i++) {
-                player[i].draw(g2, this);
+                if(player[i].isAlive())
+                    player[i].draw(g2, this);
             }
 
         }
@@ -181,7 +177,7 @@ public class BomberMap extends JFrame implements KeyListener {
     }
 
     public void keyPressed(KeyEvent e) {
-        g.keyPressedAct(e.getKeyCode(),v.obs,v.obs2,this);
+        g.keyPressedAct(e.getKeyCode(),v.obs,player,this);
         repaint();
     }
     public void keyReleased(KeyEvent e) {

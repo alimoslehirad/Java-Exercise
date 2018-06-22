@@ -1,35 +1,23 @@
 import java.io.FileOutputStream;
+import java.util.*;
 public class Main {
     public static final int x=14;
     public static final int y=14;
+    public Scanner datain=new Scanner(System.in);
     public static void main(String[] args) {
 	// write your code here
-       // BomberMap_text();
-        BomberMap g =new BomberMap("BomberMan Game");
+      //  BomberMap_text();
+        BomberMap g =new BomberMap("BomberMan Game",700,730);
 
         
     }
+
+
+
+
+
     public static void BomberMap_text(){
-        try{
-            FileOutputStream fout=new FileOutputStream("BomberMap.txt");
-            String s="Welcome to javaTpoint.";
-            byte b[]=s.getBytes();//converting string into byte array
-            s="";
-            for(int i=0;i<x;i++){
-                s+="0 ";
-            }
-            s+="\n";
-            for(int i=0;i<y;i++){
-                byte c[]=s.getBytes();//converting string into byte array
-                fout.write(c);
-
-            }
-            fout.close();
-
-            System.out.println("success...");
-        }catch(Exception e){System.out.println(e);}
-
-
+        new BomberMapMake("adfsad",x,y);
 
 
     }

@@ -10,13 +10,17 @@ import javax.swing.Timer;
 import javax.swing.JTextField;
 public class Box_c extends Obstacle {
     //public int content;
+    private boolean crossPermition=false;
     Bomb b;
     double rand;
-    public Layer2[] con;
+    public boolean isCrossPermition(){
+        return crossPermition;
+    }
+    public Obstacle[] con;
     private int ID=2;
     public Box_c(int x, int y){
 
-        con=new Layer2[4];
+        con=new Obstacle[4];
 
         this.xPos=x;
         this.yPos=y;
@@ -24,11 +28,13 @@ public class Box_c extends Obstacle {
         con[0]=new Well_c(this.xPos,this.yPos);
         con[1]=new Bomb(this.xPos,this.yPos);
         con[2]=new Flame(this.xPos,this.yPos);
-        con[3]=new BlankL2();
+        con[3]=new Blank_c(this.xPos,this.yPos);
         rand=Math.random();
         System.out.println(rand);
+        double sum=0;
         for(int i=0;i<4;i++) {
-            if (rand <con[i].probability){
+            sum+=con[i].probability;
+            if (rand <sum){
                 this.content=con[i];
                 break;
             }

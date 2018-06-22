@@ -15,13 +15,15 @@ public abstract class Obstacle extends JFrame{
     private Integer lato = 30;
     public int width=50;
     public int height=50;
-    public Layer2 content;
+
+    public Obstacle content;
 
     public boolean changeToBlank_flag=false;
     public Obstacle(){
-        content=new BlankL2();
+//        content=new Blank_c();
 
     }
+    public abstract boolean isCrossPermition();
     public abstract int getID();
     public abstract void bombReaction();
     public abstract boolean getToFireAction();

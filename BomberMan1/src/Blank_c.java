@@ -12,6 +12,10 @@ public class Blank_c extends Obstacle {
 
     private int ID=0;
     public int boxContent;
+    private boolean crossPermition=true;
+    public boolean isCrossPermition(){
+        return crossPermition;
+    }
     public  int getID(){
         return this.ID;
     }

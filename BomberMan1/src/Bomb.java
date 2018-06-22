@@ -10,36 +10,41 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import java.util.Timer;
 import java.util.TimerTask;
-public class Bomb extends Layer2{
+public class Bomb extends Obstacle{
     Obstacle[][] obs;
-    Layer2[][] obs2;
     public int indexi;
     public int indexj;
     public int bombFlame;
     private int secound=3;
     public  final byte BreadytToFire=1;
     public  final byte BFired=0;
+    public BomberMan[] player;
     public BomberMap gameMap;
     Timer timer;
     byte state;
+    private boolean crossPermition=true;
+    public boolean isCrossPermition(){
+        return crossPermition;
+    }
     public Bomb(int x,int y){
         this.xPos=x;
         this.yPos=y;
         probability=.125;
+
     }
-    public void BombTimer_start(Obstacle[][] obs1,Layer2[][] obs2 , BomberMap P){
+    public void BombTimer_start(Obstacle[][] obs1,BomberMan[] player , BomberMap P){
         timer = new Timer();
         timer.schedule(new RemindTask(),secound*1000);
         this.obs=obs1;
-        this.obs2=obs2;
         this.gameMap=P;
+        this.player=player;
     }
 
 
     class RemindTask extends TimerTask {
         public void run() {
             System.out.println("Time's up!");
-            bombـexplosion(88,obs,obs2);
+            bombـexplosion(88,obs,player);
             gameMap.repaint();
             timer.cancel(); //Terminate the timer thread
         }
@@ -64,7 +69,7 @@ public class Bomb extends Layer2{
 
     }
 
-    public void bombـexplosion(int keyCode , Obstacle[][] obs,Layer2[][] obs2){
+    public void bombـexplosion(int keyCode , Obstacle[][] obs,BomberMan[] player){
        if(keyCode==88) {       //x
 
 
@@ -72,27 +77,47 @@ public class Bomb extends Layer2{
                 for (int k = 1; k <= bombFlame; k++) {
                     if (indexi < 13) {
                         if (obs[indexi + k][indexj].getToFireAction()) {
-                            obs2[indexi + k][indexj] = obs[indexi + k][indexj].content;
-                            obs[indexi + k][indexj]=new Blank_c( obs[indexi + k][indexj].getxPos(), obs[indexi + k][indexj].yPos);
+                            obs[indexi + k][indexj]=obs[indexi + k][indexj].content;
+                        }
+                        for(int i=0;i<4;i++){
+                            if( (player[i].indexi==(indexi+k) ) && (player[i].indexj==indexj) ){
+                                player[i].alive=false;
+                            }
+
                         }
                     }
                     if (indexi > 0) {
                         if (obs[indexi - k][indexj].getToFireAction()) {
-                            obs2[indexi - k][indexj] =obs[indexi - k][indexj].content;
-                            obs[indexi - k][indexj]=new Blank_c( obs[indexi - k][indexj].getxPos(), obs[indexi - k][indexj].yPos);
+                            obs[indexi - k][indexj]=obs[indexi - k][indexj].content;
+
+                        }
+                        for(int i=0;i<4;i++){
+                            if( (player[i].indexi==(indexi-k) ) && (player[i].indexj==indexj) ){
+                                player[i].alive=false;
+                            }
 
                         }
                     }
                     if (indexj < 13) {
                         if (obs[indexi][indexj + k].getToFireAction()) {
-                            obs2[indexi][indexj + k] = obs[indexi][indexj + k].content;
-                            obs[indexi ][indexj+ k]=new Blank_c( obs[indexi ][indexj+ k].getxPos(), obs[indexi ][indexj+ k].yPos);
+                            obs[indexi ][indexj+ k]= obs[indexi][indexj + k].content;
+                        }
+                        for(int i=0;i<4;i++){
+                            if( (player[i].indexi==indexi) && (player[i].indexj==(indexj+k)) ){
+                                player[i].alive=false;
+                            }
+
                         }
                     }
                     if (indexj > 0) {
                         if (obs[indexi][indexj - k].getToFireAction()) {
-                            obs2[indexi][indexj - k] = obs[indexi][indexj - k].content;
-                            obs[indexi ][indexj- k]=new Blank_c( obs[indexi ][indexj- k].getxPos(), obs[indexi ][indexj- k].yPos);
+                            obs[indexi ][indexj- k]=obs[indexi][indexj - k].content;
+                        }
+                        for(int i=0;i<4;i++){
+                            if( (player[i].indexi==indexi) && (player[i].indexj==(indexj-k)) ){
+                                player[i].alive=false;
+                            }
+
                         }
                     }
 
@@ -100,8 +125,9 @@ public class Bomb extends Layer2{
 
 
                 }
-                obs2[indexi][indexj] = new BlankL2();
+                obs[indexi][indexj] = new Blank_c(obs[indexi][indexj].xPos,obs[indexi][indexj].yPos);
                 state = BFired;
+
             }
         }
 

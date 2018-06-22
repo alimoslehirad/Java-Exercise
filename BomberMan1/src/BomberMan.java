@@ -17,6 +17,7 @@ public class BomberMan extends MovingObject  {
     public int upKey;
     public int downKey;
     public int bombingKey;
+    public boolean alive;
     public int bombingFlame;
 
     Bomb b;
@@ -28,10 +29,13 @@ public class BomberMan extends MovingObject  {
         this.indexi=indexi;
         this.indexj=indexj;
         bombingFlame=1;
+        alive=true;
         bombermanCircle=Toolkit.getDefaultToolkit().getImage(s);
 
     }
-
+    public boolean isAlive(){
+        return alive;
+    }
     public void setPosition(){
         xPos=indexj*50;
         yPos=indexi*50+30;
@@ -41,7 +45,7 @@ public class BomberMan extends MovingObject  {
    
 
 
-    public void react(int cmd,Obstacle[][] obs,Layer2[][] obs2, BomberMap P) {
+    public void react(int cmd,Obstacle[][] obs,BomberMan[] player, BomberMap P) {
         if (cmd == 0) {
             move_up();
             if (obs[indexi][indexj].getID() == 10) {
@@ -67,21 +71,21 @@ public class BomberMan extends MovingObject  {
                 obs[indexi][indexj] = new Blank_c(obs[indexi][indexj].getxPos(), obs[indexi][indexj].getyPos());
             }
         } else if (cmd == 4) {
-            bombing(obs,obs2, P);
+            bombing(obs,player, P);
 
         }
 
     }
 
 
-    public void bombing(Obstacle[][] obs,Layer2[][] obs2, BomberMap P){
+    public void bombing(Obstacle[][] obs,BomberMan[] player, BomberMap P){
         b=new Bomb(this.xPos,this.yPos);
         b.indexi=indexi;
         b.indexj=indexj;
         b.bombFlame=bombingFlame;
         b.state=v.BreadytToFire;
-        obs2[indexi][indexj]=b;
-        b.BombTimer_start(obs,obs2,P);
+        obs[indexi][indexj]=b;
+        b.BombTimer_start(obs,player,P);
     }
 
 

@@ -1,6 +1,10 @@
 import java.awt.*;
-public class Well_c extends Layer2 {
+public class Well_c extends Obstacle {
     private int ID=7;
+    private boolean crossPermition=true;
+    public boolean isCrossPermition(){
+        return crossPermition;
+    }
     public Well_c(int x, int y){
         this.xPos=x;
         this.yPos=y;

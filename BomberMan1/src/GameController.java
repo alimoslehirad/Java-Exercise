@@ -33,12 +33,12 @@ public class GameController {
         }
 
     }
-    public void keyPressedAct(int KeyCode , Obstacle[][] obs,Layer2[][] obs2,BomberMap P) {
+    public void keyPressedAct(int KeyCode , Obstacle[][] obs,BomberMan[] player,BomberMap P) {
         int[] x = new int[2];
         findTask(keyConf.keys, KeyCode, x);
         if (permitionToTask(x,obs,P)) {
 
-            P.player[x[0]].react(x[1],obs,obs2,P);
+            P.player[x[0]].react(x[1],obs,player,P);
         }
     }
      public boolean permitionToTask(int[] x , Obstacle[][] obs , BomberMap P) {
@@ -64,7 +64,7 @@ public class GameController {
 
             boolean permition=false;
             if(m.indexj!=13) {
-                if (d[m.indexi][m.indexj + 1].getID() == Blank) {
+                if (d[m.indexi][m.indexj + 1].isCrossPermition()) {
                     permition = true;
                 } else {
                     permition = false;
@@ -79,7 +79,7 @@ public class GameController {
     boolean  moveLeft_permition(Obstacle[][] d, BomberMan m){
         boolean permition=false;
         if(m.indexj!=0) {
-            if (d[m.indexi][m.indexj - 1].getID() == Blank) {
+            if (d[m.indexi][m.indexj - 1].isCrossPermition()) {
                 permition = true;
             } else {
                 permition = false;
@@ -93,7 +93,7 @@ public class GameController {
     boolean  moveUp_permition(Obstacle[][] d, BomberMan m){
         boolean permition=false;
         if(m.indexi!=0) {
-            if (d[m.indexi-1][m.indexj].getID() == Blank) {
+            if (d[m.indexi-1][m.indexj].isCrossPermition()) {
                 permition = true;
             } else {
                 permition = false;
@@ -106,7 +106,7 @@ public class GameController {
     boolean  moveDown_permition(Obstacle[][] d, BomberMan m){
         boolean permition=false;
         if(m.indexi!=13) {
-            if (d[m.indexi+1][m.indexj].getID() == Blank) {
+            if (d[m.indexi+1][m.indexj].isCrossPermition()) {
                 permition = true;
             } else {
                 permition = false;

@@ -1,8 +1,12 @@
 import java.awt.*;
 
-public class Flame extends  Layer2{
+public class Flame extends  Obstacle{
     Image img = Toolkit.getDefaultToolkit().getImage("flame.png");
     private int ID=10;
+    private boolean crossPermition=true;
+    public boolean isCrossPermition(){
+        return crossPermition;
+    }
     public Flame(int x,int y){
         this.xPos=x;
         this.yPos=y;

@@ -12,6 +12,10 @@ public class Wall_c extends Obstacle {
     public Wall_c(){
         probability=0;
     }
+    private boolean crossPermition=false;
+    public boolean isCrossPermition(){
+        return crossPermition;
+    }
     private Integer lato = 20;
     private int ID=3;
     @Override
