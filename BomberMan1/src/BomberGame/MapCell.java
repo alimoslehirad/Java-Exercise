@@ -27,6 +27,6 @@ public abstract class MapCell extends JFrame{
         return xPos;
     }
 
-    abstract void   draw(BomberMap P , Graphics2D g);
+    abstract void draw(BomberMap P , Graphics2D g);
 
 }
