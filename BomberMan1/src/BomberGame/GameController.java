@@ -15,11 +15,11 @@ public class GameController {
     }
 
 
-    public void findTask(int[][] key , int keyCode, int[] x){
+    public void findTask(String[][] key , String keyCode, int[] x){
         boolean flag=false;
         for(int i=0;i<4;i++){
             for(int j=0;j<5;j++){
-                if(key[i][j]==keyCode){
+                if(key[i][j].equals(keyCode)){
                     x[0]=i;
                     x[1]=j;
                     flag=true;
@@ -30,7 +30,7 @@ public class GameController {
         }
 
     }
-    public void keyPressedAct(int KeyCode , MapCell[][] obs,BomberMan[] player,BomberMap P) {
+    public void keyPressedAct(String KeyCode , MapCell[][] obs,BomberMan[] player,BomberMap P) {
         int[] x = new int[2];
         findTask(keyConf.keys, KeyCode, x);
         if (permitionToTask(x,obs,P)) {
